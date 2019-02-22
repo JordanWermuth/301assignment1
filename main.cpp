@@ -14,6 +14,8 @@
 
 #include<string>
 
+#include<sstream>
+
 using namespace std;
 
 struct PERSON
@@ -51,14 +53,13 @@ int main()
         return 0;
     }
 
+    cout << setprecision(2) << fixed;
 
-    cout<<setprecision(2)<<fixed;
+    cout << setw(15)<< left << "Name" << "Balance" << endl;
 
-    cout<<setw(15)<<left<< "Name" << " Balance"<<endl;
+    cout <<"----------------------------"<< endl;
 
-    cout<<"----------------------------"<<endl;
 
-    cout << setprecision(2)<<fixed;
 
 
 
@@ -106,14 +107,54 @@ void Display(PERSON *persons, int N )
         cout << "cannot open the file" << endl;
 
     }
+
+
+
+    /*while (getline(in, line))
+        {
+
+
+            string entryname, balance;
+
+            in >> ws;
+
+
+
+
+        }
+
+    if (in.is_open())
+        {
+            string line;
+            while (getline(in, line))
+                {
+                    printf("%s", line.c_str());
+                }
+
+        }*/
+
+
+
+
+
+
+
     string line;
 
-    while(getline(in, line))
-    {
-        N++;
-    }
+    while(!in.eof())
+        {
+            getline(in, line);
 
-    in.clear();
+            cout << line << endl;
+
+
+
+
+        }
+
+
+    in.close();
+    /*in.clear();
     in.seekg (0, in.end);        // tried a new method for reading this file, found on cplusplus
     int length = in.tellg();
 
@@ -125,7 +166,7 @@ void Display(PERSON *persons, int N )
     cout.write (buffer, length);
 
 
-
+*/
 
 
 }
@@ -133,25 +174,22 @@ void Display(PERSON *persons, int N )
 void getHighest(PERSON *persons, int N)
 {
 
-    /* int max = 0;
-
+     /*int max = 0;
      for(int i=0; i < N; i++){
+         if(persons[max].balance < persons[i].balance)
+             max = i;}*/
 
-         if(persons[max].balance<persons[i].balance)
-
-             max = i;
-             */
 
     PERSON Highest = persons[0];
     for (int i = 1; i < N; i++)
 
-    {
-        if (Highest.balance < persons[i].balance)
-            Highest = persons[i];
+        {
+            if (Highest.balance < persons[i].balance)
 
-    }
+                Highest = persons[i];
+        }
 
-    cout << "Entry with the highest balance is " << Highest.name << endl; // this prints
+    cout << "Entry with the highest balance is " << Highest.name << endl;// this prints
 
 
 
@@ -163,16 +201,16 @@ void Deposit(char entryname[],PERSON *persons, int N)
 
 {
 
-    int ind = 0;
+    int i = 0;
 
 
 
-    for(int i=0; i< N; i++){
+    for(int j=0; j< N; j++){
 
         if(strcmp(entryname, persons[i].name)==0)
         {
 
-            ind = i;
+            i = j;
 
             break;
 
@@ -181,7 +219,7 @@ void Deposit(char entryname[],PERSON *persons, int N)
 
     }
 
-    if(ind == -1)
+    if(i == -1)
 
         cout<<"entry not found"<<endl;
 
@@ -193,9 +231,9 @@ void Deposit(char entryname[],PERSON *persons, int N)
 
         cin >> deposit;
 
-        persons[ind].balance+=deposit;
+        persons[i].balance+=deposit;
 
-        cout<<"New balance is: "<<persons[ind].balance<<endl;
+        cout<<"New balance is: "<<persons[i].balance<<endl;
 
     }
 
@@ -217,4 +255,5 @@ void NewCopy(string firstname, PERSON *persons, int N) {
 
     out.close();
 }
+
 
